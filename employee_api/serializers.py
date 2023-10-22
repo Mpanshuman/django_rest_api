@@ -15,6 +15,8 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class DeviseSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer(many=True)
+
     class Meta:
         model = Devise
         exclude = ["id", "deleted_at"]

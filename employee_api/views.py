@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from .models import Employee, Devise, Department
 from .serializers import EmployeeSerializer, DepartmentSerializer, DeviseSerializer
 from rest_framework.response import Response
+from rest_framework import generics
 
 
 # Create your views here.
@@ -50,3 +51,17 @@ class EmployeeApi(APIView):
             return Response(status=200, data="Employee Deleted")
         except Exception as e:
             return Response(status=400, data="Failed to get user with provided id")
+
+
+class DeviseGenericView(
+    generics.ListAPIView,
+    generics.CreateAPIView,
+):
+    queryset = Devise.objects.all()
+    serializer_class = DeviseSerializer
+
+
+class DeviseUpDeleteView(generics.DestroyAPIView, generics.UpdateAPIView):
+    queryset = Devise.objects.all()
+    serializer_class = DeviseSerializer
+    lookup_field = "id"
